@@ -1,6 +1,8 @@
 package com.basics.autowire;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +16,18 @@ public class CarFactory {
 	
 	@Autowired
 	@Qualifier("sedan")// autowiring by type
-	private  ICar car;
+	private  ICar iCar;
 	
 	@Autowired
 	private ICar convertible;  //autowiring by name
 	
 	
-	private ICar hatchBack;
+	private ICar nCar;
 	
 	
-	
-	public CarFactory(ICar hatchBack) {  // autowiring by Constructor
-		this.hatchBack=hatchBack;
+	public CarFactory(@Qualifier("hatchBack") ICar nCar) { // autowiring by Constructor
+		super();
+		this.nCar=nCar;
 		
 	}
 
@@ -34,19 +36,24 @@ public class CarFactory {
 	
 	
 	public List<String> showCarBrands(String brandsType) {
-		
+		List<String> brands=new ArrayList<>();
 		if(CarBrands.SEDAN.name().equals(brandsType.toUpperCase())) {
-			return car.showBrands();
+			 brands=iCar.showBrands();
 		}
-		if(CarBrands.CONVERTIBLE.name().equals(brandsType.toUpperCase())) {
-			return convertible.showBrands();
+		else if(CarBrands.CONVERTIBLE.name().equals(brandsType.toUpperCase())) {
+			brands= convertible.showBrands();
 		}
-		if(CarBrands.HATCHBACK.name().equals(brandsType.toUpperCase())) {
-		return hatchBack.showBrands();
+		else if(CarBrands.HATCHBACK.name().equals(brandsType.toUpperCase())) {
+	       	brands= nCar.showBrands();
 		}
 		
-		return null;
+		else {
+			brands=Arrays.asList("No car brands are available!!! ");
+			
+		}
 		
+		return brands;
+	
 		
 		
 	}

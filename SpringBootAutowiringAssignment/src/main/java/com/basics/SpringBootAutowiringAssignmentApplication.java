@@ -1,6 +1,7 @@
 package com.basics;
 
 import com.basics.autowire.CarFactory;
+import com.basics.autowire.ICar;
 
 import java.util.List;
 
@@ -13,34 +14,30 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class SpringBootAutowiringAssignmentApplication  implements CommandLineRunner{
 
-	private  CarFactory carFactory;
+	
+	
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootAutowiringAssignmentApplication.class, args);
 	}
 	
-	@Autowired
-	private ApplicationContext applicationContext;
+	private  CarFactory carFactory;
 
-	SpringBootAutowiringAssignmentApplication(CarFactory carFactory) {
+	@Autowired 
+	public void setCarFactory(CarFactory carFactory) {
 		this.carFactory = carFactory;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		
-		/*
-		 * CarFactory factory=applicationContext.getBean("carFactory",
-		 * CarFactory.class);
-		 * 
-		 * List<String> brands=factory.showCarBrands("hatchback");
-		 * brands.stream().forEach(System.out::println);
-		 */
+		
 		carFactory.showCarBrands("sedan").forEach(System.out::println);
 		System.out.println("==========================================================");
 		carFactory.showCarBrands("convertible").forEach(System.out::println);
 		System.out.println("============================================================");
-		carFactory.showCarBrands("hatchback").forEach(System.out::println);
+		carFactory.showCarBrands("hatchBack").forEach(System.out::println);
 		
 		
 		
